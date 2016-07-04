@@ -11,6 +11,6 @@ $photoArray = array(
 );
 $PhotoClass = new Photo();
 $updateMessage = $PhotoClass->updatePhoto($photoArray);
-// header("Location: http://localhost/api/photos.php?message=" . $updateMessage, true, 302);
+header("Location: http://localhost/photos?message=" . $updateMessage, true, 302);
 
 ?>

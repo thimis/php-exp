@@ -26,9 +26,9 @@ $photo = $PhotoClass->singlePhoto($id);
     <div class="col-md-6">
 
       <div class="btn-group" role="group">
-        <a class="btn btn-default btn-primary" href="/api/photos.php">All photos</a>
-        <a class="btn btn-default btn-danger" href="/api/delete.php?id=<?php echo $photo['id']; ?>">Delete</a>
-        <a class="btn btn-default btn-info" href="/api/edit.php?id=<?php echo $photo['id']; ?>">Edit</a>
+        <a class="btn btn-default btn-primary" href="/photos">All photos</a>
+        <a class="btn btn-default btn-danger" href="/photo/<?php echo $photo['id']; ?>/delete">Delete</a>
+        <a class="btn btn-default btn-info" href="/photo/<?php echo $photo['id']; ?>/edit">Edit</a>
       </div>
 
     </div>

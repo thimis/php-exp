@@ -1,3 +1,8 @@
 AddDefaultCharset UTF-8
 RewriteEngine on
 RewriteBase /
+RewriteRule ^photo/([0-9]+)/?$ /api/photo.php?id=$1 [L]
+RewriteRule ^photos$ /api/photos.php [L]
+RewriteRule ^photo/new$ /api/new.php [L]
+RewriteRule ^photo/([0-9]+)/edit?$ /api/edit.php?id=$1 [L]
+RewriteRule ^photo/([0-9]+)/delete?$ /api/delete.php?id=$1 [L]

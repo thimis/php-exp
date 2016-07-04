@@ -34,7 +34,7 @@
     <div class="col-md-6">
 
       <div class="btn-group" role="group">
-        <a class="btn btn-default btn-primary" href="/api/photos.php">All photos</a>
+        <a class="btn btn-default btn-primary" href="/photos">All photos</a>
       </div>
 
     </div>
