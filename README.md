@@ -10,3 +10,8 @@ and to get better with php
  - Custom routing with Apache
  - User can upload an image with a title and description
  - Create a pseudo-REST api for CRUD actions on photos
+
+### To run the project:
+ - Run the docker image at pburris/php-exp
+ - Goto the url localhost/bootstrap.php to add the database and table to the MySQL db
+ - Start adding/deleting/editing photo posts
