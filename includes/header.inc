@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <title></title>
 </head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Merriweather:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="/css/main.css" charset="utf-8">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <body>
 <?php include 'message.inc'; ?>
-<div class="container">
-
-  <div class="row">
-    <div class="col-md-6">
-
-      <div class="btn-group" role="group">
-        <a class="btn btn-default" href="/">Home</a>
-        <a class="btn btn-default" href="/photos">All photos</a>
-        <a class="btn btn-default" href="/photo/new">New photo</a>
-      </div>
-
-    </div>
-  </div>
-
-</div>
+<main class="wrapper">
+  <nav class="navigation">
+		<section class="container">
+			<a class="navigation-title" href="/">
+				<h1 class="title">Photo Upload Service</h1>
+			</a>
+			<ul class="navigation-list float-right">
+				<li class="navigation-item">
+					<a class="navigation-link" href="/photos">All Photos</a>
+				</li>
+				<li class="navigation-item">
+					<a class="navigation-link" href="/photo/new">New Photo</a>
+				</li>
+			</ul>
+		</section>
+	</nav>

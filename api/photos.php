@@ -10,24 +10,33 @@ $photos = $Photo->allPhotos();
 ?>
 
 <div class="container">
-  <div class="row">
+  <div class="flex row wrap halign-left">
   <?php for ($i = 0; $i < count($photos); $i++): ?>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <div class="thumbnail">
-        <a href="/photo/<?php echo $photos[$i]['id']; ?>">
-          <img src="<?php echo '/images/' . $photos[$i]['image']; ?>">
-        </a>
-        <div class="caption">
-          <h3><?php echo $photos[$i]['title']; ?></h3>
-          <p><?php echo $photos[$i]['description']; ?></p>
-          <a class="btn btn-default btn-danger" href="/photo/<?php echo $photos[$i]['id']; ?>/delete">Delete</a>
-          <a class="btn btn-default btn-info" href="/photo/<?php echo $photos[$i]['id']; ?>/edit">Edit</a>
+
+    <div class="col-4 photo flex">
+      <div class="photo--wrapper flex">
+        <div class="center">
+          <div class="flex column">
+            <a href="/photo/<?php echo $photos[$i]['id']; ?>">
+              <img src="<?php echo '/images/' . $photos[$i]['image']; ?>">
+              <h3 class="photo--title tac"><?php echo $photos[$i]['title']; ?></h1>
+            </a>
+          </div>
+
+          <div class="photo--options">
+            <div class="flex column">
+
+              <a class="button button-outline" href="/photo/<?php echo $photos[$i]['id']; ?>/edit">Edit</a>
+              <a class="button button-clear button-black" href="/photo/<?php echo $photos[$i]['id']; ?>/delete">Delete</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   <?php endfor; ?>
   </div>
 </div>
-</div>
+
 
 <?php include_once('../' . dirname('.') . '/includes/header.inc'); ?>

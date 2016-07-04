@@ -12,33 +12,29 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
+    <div class="column">
       <form enctype="multipart/form-data" action="/api/update.php" method="POST">
+
+        <!-- Hidden id field -->
         <input type="hidden" name="id" value="<?php echo $photo['id']; ?>">
+
+        <!-- Hidden image field -->
         <input type="hidden" name="image" value="<?php echo $photo['image']; ?>">
+
+        <!-- Image -->
         <img src="/images/<?php echo $photo['image']; ?>" /><br><br>
-        <div class="form-group">
+
+        <!-- Title/Description fields -->
           <label for="title">Title:</label>
           <input type="text" class="form-control" id="title" placeholder="Message" name="title" value="<?php echo $photo['title']; ?>">
-        </div>
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <textarea type="text" class="form-control" id="message" placeholder="Description" name="description"><?php echo $photo['description']; ?></textarea>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+
+          <label class="f2 mb2 db" for="description">Description:</label>
+          <textarea class="db w-100" type="text" class="form-control" id="message" placeholder="Description" name="description" rows="6"><?php echo $photo['description']; ?></textarea>
+
+        <!-- Submit Button -->
+        <button type="submit" class="button button-outline">Submit</button>
       </form>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-md-6">
-
-      <div class="btn-group" role="group">
-        <a class="btn btn-default btn-primary" href="/photos">All photos</a>
-      </div>
-
-    </div>
-  </div>
-
 </div>
 <?php include_once(dirname('.') . '/includes/header.inc'); ?>

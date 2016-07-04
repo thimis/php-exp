@@ -6,7 +6,7 @@ class Photo {
 
 
   public function __construct() {
-    include_once(dirname('.') . '/lib/db.php');
+    include_once('../' . dirname('.') . '/lib/db.php');
     $this->db = new Db();
   }
 
@@ -91,7 +91,7 @@ class Photo {
     }
 
     // Save the file to disk
-    move_uploaded_file($tmp, '/app/images/' . $image);
+    move_uploaded_file($tmp, '/app/public/images/' . $image);
 
     $query = "INSERT INTO photos(image, title, description) VALUES('$image', '$title', '$description')";
     // save the photo entry to the database
