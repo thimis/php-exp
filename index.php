@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/main.css" charset="utf-8">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<body>
+<?php
+  include_once(dirname('.') . '/includes/header.inc');
+  if (!empty($_GET["message"])) {
+    $message = $_GET["message"];
 
+    if ($message == 'saved') {
+      $alert = '<div class="alert alert-success" role="alert">Image successfully saved!</div>';
+    } elseif($message == 'notsaved') {
+      $alert = '<div class="alert alert-danger" role="alert">There was a problem saving the image. Try again later</div>';
+    } elseif($message == 'emptyfield') {
+      $alert = '<div class="alert alert-warning" role="alert">One or more fields are empty.</div>';
+    } else {
+      $alert = '';
+    }
+  }
+?>
+
+<?php echo $alert; ?>
 <div class="container">
 <div class="row">
   <div class="col-md-4">
@@ -28,11 +35,26 @@
     </form>
   </div>
 </div>
+<br><br>
+<?php
+// Retrieve the entries
+$mysql = new mysqli($ip, "root", NULL, "photoApp");
+$photos = $mysql->query("SELECT * FROM photos");
+?>
+
+  <div class="row">
+  <?php while($row=$photos->fetch_array()) { ?>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="thumbnail">
+        <img src="<?php echo '/images/' . $row['image']; ?>">
+        <div class="caption">
+          <h3><?php echo $row['title']; ?></h3>
+          <p><?php echo $row['description']; ?></p>
+        </div>
+      </div>
+    </div>
+  <?php } ?>
+  </div>
 </div>
 
-<pre>
-  <?php $_FILES['photo']; ?>
-</pre>
-
-</body>
-</html>
+<?php include_once(dirname('.') . '/includes/header.inc'); ?>

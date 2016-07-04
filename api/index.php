@@ -1,37 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-</head>
-<body>
+  <?php
+  function save() {
 
-<?php
-$body = $_POST;
-$info = $_FILES;
-$fileName = $info["name"];
-$fileTmpName = $info["tmp_name"];
-$target = "\/images/".$fileName;
+    $body = $_POST;
+    $title = $body["title"];
+    $description = $body["description"];
+    $info = $_FILES["userFile"];
+    $fileName = $info["name"];
+    $fileTmpName = $info["tmp_name"];
+    $target = '/app/images/' . $fileName;
 
-move_uploaded_file( $fileTmpName, $target);
+    // Save the file.
+    if (move_uploaded_file($fileTmpName, $target)) {
+      echo "\n";
+    }
 
-?>
+    // save the photo entry to the database
+    $host= gethostname();
+    $ip = gethostbyname($host);
 
-  <h1>Message: <?php echo $_POST["message"]; ?></h1>
-  <img src="/images/<?php echo $fileName; ?>" alt="" />
-  <h2><?php echo $body["title"]; ?></h2>
-  <p>
-    <?php echo $body["description"]; ?>
-  </p>
+    $mysql = new mysqli("localhost", "root", NULL, "photoApp");
 
-  <pre>
-    <?php print_r($body); ?>
-  </pre>
+    if ($mysql->query("INSERT INTO photos(id, image, title, description) VALUES('$title', '$fileName', '$title', '$description')")) {
+      header("Location: http://localhost/index.php?message=saved", true, 302);
+    } else {
+      header("Location: http://localhost/index.php?message=notsaved", true, 302);
+    }
+  };
 
-  <pre>
-    <?php print_r($fileName); ?>
-  </pre>
-
-  <h1>hello?</h1>
-</body>
-</html>
+  if (!empty($title) &&
+      !empty($description) &&
+      !empty($fileName)
+  ) {
+    save();
+  } else {
+    header("Location: http://localhost/index.php?message=emptyfield", true, 302);
+  }
