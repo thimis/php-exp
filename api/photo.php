@@ -14,7 +14,26 @@ $photo = $PhotoClass->singlePhoto($id);
 
   <div class="row">
     <div class="column">
-      <img src="/images/<?php echo $photo['image']; ?>" />
+      <nav id="filters">
+        <a class="button button-outline" href="#" data-filter="">None</a>
+        <a class="button button-outline" href="#" data-filter="reyes">Reyes</a>
+        <a class="button button-outline" href="#" data-filter="perpetua">Perpetua</a>
+        <a class="button button-outline" href="#" data-filter="toaster">Toaster</a>
+        <a class="button button-outline" href="#" data-filter="walden">Walden</a>
+        <a class="button button-outline" href="#" data-filter="aden">Aden</a>
+        <a class="button button-outline" href="#" data-filter="inkwell">Inkwell</a>
+        <a class="button button-outline" href="#" data-filter="xpro2">Xpro II</a>
+        <a class="button button-outline" href="#" data-filter="nashville">Nashville</a>
+      </nav>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="column">
+      <figure id="image" class="xpro2">
+        <img src="/images/<?php echo $photo['image']; ?>" />
+      </figure>
       <h1 class="photo--title"><?php echo $photo['title']; ?></h1>
       <p class="photo--description">
         <?php echo $photo['description']; ?>
@@ -31,4 +50,4 @@ $photo = $PhotoClass->singlePhoto($id);
 
 </div>
 
-<?php include_once('../' . dirname('.') . '/includes/header.inc'); ?>
+<?php include_once('../' . dirname('.') . '/includes/footer.inc'); ?>

@@ -5,6 +5,7 @@
   <title></title>
 </head>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Merriweather:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cssgram-cssgram.netdna-ssl.com/cssgram.min.css">
 <link rel="stylesheet" href="/css/main.css" charset="utf-8">
 <body>
 <?php include 'message.inc'; ?>

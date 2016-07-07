@@ -15,7 +15,8 @@ $createTable = "CREATE TABLE photos (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   image VARCHAR(255) NOT NULL,
   title VARCHAR(255) NOT NULL,
-  description VARCHAR(500) NOT NULL
+  description VARCHAR(500) NOT NULL,
+  filter VARCHAR(20) NOT NULL
 )";
 if ($mysql2->query($createTable)) {
   echo "Table Created!\n";

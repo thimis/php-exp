@@ -27,3 +27,5 @@
     </form>
 
 </div>
+
+<?php include_once('../' . dirname('.') . '/includes/footer.inc'); ?>

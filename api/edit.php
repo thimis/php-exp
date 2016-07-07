@@ -37,4 +37,4 @@
     </div>
   </div>
 </div>
-<?php include_once(dirname('.') . '/includes/header.inc'); ?>
+<?php include_once('../' . dirname('.') . '/includes/footer.inc'); ?>

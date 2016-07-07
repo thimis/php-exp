@@ -18,7 +18,9 @@ $photos = $Photo->allPhotos();
         <div class="center">
           <div class="flex column">
             <a href="/photo/<?php echo $photos[$i]['id']; ?>">
-              <img src="<?php echo '/images/' . $photos[$i]['image']; ?>">
+              <figure class="">
+                <img src="<?php echo '/images/' . $photos[$i]['image']; ?>">
+              </figure>
               <h3 class="photo--title tac"><?php echo $photos[$i]['title']; ?></h1>
             </a>
           </div>
@@ -39,4 +41,4 @@ $photos = $Photo->allPhotos();
 </div>
 
 
-<?php include_once('../' . dirname('.') . '/includes/header.inc'); ?>
+<?php include_once('../' . dirname('.') . '/includes/footer.inc'); ?>
