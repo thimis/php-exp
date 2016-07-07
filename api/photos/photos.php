@@ -1,8 +1,8 @@
 <?php
 // Includes
-include_once('../' . dirname('.') . '/includes/header.inc');
-include_once('../' . dirname('.') . '/lib/db.php');
-include_once('../' . dirname('.') . '/models/photo.php');
+include_once('../../' . dirname('.') . '/includes/header.inc');
+include_once('../../' . dirname('.') . '/lib/db.php');
+include_once('../../' . dirname('.') . '/models/photo.php');
 
 // Retrieve the entries
 $Photo = new Photo();
@@ -18,7 +18,7 @@ $photos = $Photo->allPhotos();
         <div class="center">
           <div class="flex column">
             <a href="/photo/<?php echo $photos[$i]['id']; ?>">
-              <figure class="">
+              <figure class="<?php echo $photos[$i]['filter']; ?>">
                 <img src="<?php echo '/images/' . $photos[$i]['image']; ?>">
               </figure>
               <h3 class="photo--title tac"><?php echo $photos[$i]['title']; ?></h1>
@@ -41,4 +41,4 @@ $photos = $Photo->allPhotos();
 </div>
 
 
-<?php include_once('../' . dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>

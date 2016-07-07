@@ -1,5 +1,5 @@
 <?php
-  include_once('../' . dirname('.') . '/includes/header.inc');
+  include_once('../../' . dirname('.') . '/includes/header.inc');
 ?>
 
 <div class="container">
@@ -28,4 +28,4 @@
 
 </div>
 
-<?php include_once('../' . dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>

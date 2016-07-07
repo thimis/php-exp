@@ -9,6 +9,10 @@ const filterProto = {
         filterProto.methods.setActive(filterProto.el.image.className);
       }
 
+      if (document.getElementById('filterInput')) {
+        document.getElementById('filterInput').setAttribute('value', filterProto.el.image.className);
+      }
+
       // add event listeners
       for (i = 0; i < filterProto.el.filterList.length; i++) {
         filterProto.el.filterList[i].addEventListener('click', function() {
@@ -19,6 +23,9 @@ const filterProto = {
     setFilter: function(el) {
       var filter = el.getAttribute('data-filter');
       filterProto.el.image.className = filter;
+      if (document.getElementById('filterInput')) {
+        document.getElementById('filterInput').setAttribute('value', filter);
+      }
     },
     handleClick: function(el) {
       currentBtn = filterProto.el.container.querySelector('.active');

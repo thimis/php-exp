@@ -3,6 +3,11 @@
 class Db {
 
   protected static $connection;
+  private $db;
+
+  function __construct($db) {
+    $this->db = $db;
+  }
 
   /**
    * Connect to the database
@@ -11,7 +16,7 @@ class Db {
   public function connect() {
     // Try to connect
     if (!isset(self::$connection)) {
-      self::$connection = new mysqli("localhost", "root", NULL, "photoApp");
+      self::$connection = new mysqli("localhost", "root", NULL, $this->db);
     }
 
     // If the connection is not successful, handle error.

@@ -1,13 +1,13 @@
 <?php
 
-class Photo {
+class User {
 
   protected static $connection;
 
 
   public function __construct() {
-    include_once('../../' . dirname('.') . '/lib/db.php');
-    $this->db = new Db("photoApp");
+    include_once('../' . dirname('.') . '/lib/db.php');
+    $this->db = new Db("userDB");
   }
 
   /**
@@ -80,7 +80,7 @@ class Photo {
     $filter = 'none';
 
     if (!$this->isImage($tmp)) {
-      header("Location: http://localhost/photo/new?message=notImage", true, 302);
+      header("Location: http://localhost/index.php?message=notImage", true, 302);
       return false;
     }
 
@@ -88,7 +88,7 @@ class Photo {
         empty($description) ||
         empty($image)
     ) {
-      header("Location: http://localhost/photo/new?message=emptyfield", true, 302);
+      header("Location: http://localhost/index.php?message=emptyfield", true, 302);
     }
 
     // Save the file to disk
