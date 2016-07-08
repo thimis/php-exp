@@ -1,24 +1,20 @@
   <?php
 
   // Includes
-  include_once('../../' . dirname('.') . '/lib/db.php');
-  include_once('../../' . dirname('.') . '/models/photo.php');
+  include_once('../../' . dirname('.') . '/models/user.php');
 
-  // POST params + Image file
+  // POST params
   $body = $_POST;
-  $info = $_FILES["userFile"];
-  $fileName = $info["name"];
-  $fileTmpName = $info["tmp_name"];
 
   // Create new Photo object
-  $Photo = new Photo();
-  $photoArray = array(
-    "title" => $body["title"],
-    "description" => $body["description"],
-    "image" => $fileName,
-    "temp" => $fileTmpName,
-    "filter" => $body["filter"]
+  $User = new User();
+  $userArray = array(
+    "email" => $body["email"],
+    "first_name" => $body["first_name"],
+    "last_name" => $body["last_name"],
+    "password" => $body["password"],
+    "confirm_password" => $body["confirm_password"],
   );
 
   // integrate the surrounding code into the photo class
-  $Photo->savePhoto($photoArray);
+  $User->createUser($userArray);

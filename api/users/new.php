@@ -4,25 +4,28 @@
 
 <div class="container">
 
-    <form enctype="multipart/form-data" action="/photo/create" method="POST">
+    <form enctype="multipart/form-data" action="/user/create" method="POST">
 
-      <!-- File Filed -->
-      <div class="button btn--upload fileUpload">
-        <span>Upload Image</span>
-        <input class="upload" type='file' name='userFile'>
-      </div>
+      <!-- Email field -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Email address" name="email" >
 
+      <!-- First Name / Last Name -->
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" placeholder="First Name" name="first_name">
 
-      <!-- Title/Description fields -->
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" placeholder="Last Name" name="last_name">
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" placeholder="Message" name="title" value="<?php echo $photo['title']; ?>">
+      <!-- Password / Confirm Password -->
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
 
-        <label for="description">Description:</label>
-        <textarea type="text" id="" placeholder="Description" name="description" rows="6"><?php echo $photo['description']; ?></textarea>
+      <label for="confirm_password">Confirm Password:</label>
+      <input type="password" id="confirm_password" name="confirm_password">
 
       <!-- Submit Button -->
-      <button type="submit" class="button button-outline">Submit</button>
+      <button type="submit" class="button button-outline">Create User</button>
 
     </form>
 

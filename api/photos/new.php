@@ -16,10 +16,10 @@
       <!-- Title/Description fields -->
 
         <label for="title">Title:</label>
-        <input type="text" id="title" placeholder="Message" name="title" value="<?php echo $photo['title']; ?>">
+        <input type="text" id="title" placeholder="Message" name="title" value="">
 
         <label for="description">Description:</label>
-        <textarea type="text" id="" placeholder="Description" name="description" rows="6"><?php echo $photo['description']; ?></textarea>
+        <textarea type="text" id="" placeholder="Description" name="description" rows="6"></textarea>
 
       <!-- Submit Button -->
       <button type="submit" class="button button-outline">Submit</button>

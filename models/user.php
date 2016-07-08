@@ -1,4 +1,11 @@
 <?php
+/* User model
+ *
+ * @TODO: Change flash messages for user specific messages
+ * @TODO: Add form validation & sanitize input
+ * @TODO: Handle session & cookies & tokens
+ */
+
 
 class User {
 
@@ -6,7 +13,7 @@ class User {
 
 
   public function __construct() {
-    include_once('../' . dirname('.') . '/lib/db.php');
+    include_once('../../lib/db.php');
     $this->db = new Db("userDB");
   }
 
@@ -29,13 +36,14 @@ class User {
   }
 
   /**
-   * All Photos
+   * All Users
    *
-   * @return {Boolean | Object} false on a failure and an array of photos rows on success
+   * @return {Boolean | Object} false on a failure and an array of users rows on success
+   * @TODO: only get the fields that are needed, not password or anything sensitive
    */
-   public function allPhotos() {
+   public function allUsers() {
      $rows = array();
-     $query = 'SELECT * FROM photos';
+     $query = 'SELECT * FROM users';
      $res = $this->connect()->query($query);
 
      if ($res === false) {
@@ -50,14 +58,15 @@ class User {
   }
 
   /**
-   * Single Photo
+   * Single User
    *
-   * @param {Integer} $id of the photo to get from the database
-   * @return {Boolean | Object} false on a failure and a single photo on success
+   * @param {Integer} $id of the user to get from the database
+   * @return {Boolean | Object} false on a failure and a single user on success
+   * @TODO: only get the fields that are needed, not password or anything sensitive
    */
-  public function singlePhoto($id) {
+  public function singleUser($id) {
     $row = array();
-    $query = 'SELECT * FROM photos WHERE id = ' . $id;
+    $query = 'SELECT * FROM users WHERE id = ' . $id;
     $res = $this->connect()->query($query);
 
     if ($res === false) {
@@ -67,34 +76,25 @@ class User {
   }
 
   /**
-   * Create/Save photo
+   * Create/Save user
    *
    * @param {Array} data to save in the database
    * Redirect after query
    */
-  public function savePhoto($data) {
-    $title = $data['title'];
-    $description = $data['description'];
-    $image = $data['image'];
-    $tmp = $data['temp'];
-    $filter = 'none';
-
-    if (!$this->isImage($tmp)) {
-      header("Location: http://localhost/index.php?message=notImage", true, 302);
-      return false;
-    }
-
-    if (empty($title) ||
-        empty($description) ||
-        empty($image)
-    ) {
+  public function createUser($data) {
+    $email = $data['email'];
+    $first_name = $data['first_name'];
+    $last_name = $data['last_name'];
+    $password = $data['password'];
+    $confirm_password = $data['confirm_password'];
+    $date = getdate()[0];
+    $status = 'preactivated';
+    // Handle empty email or password
+    if (empty($email) || empty($password) || empty($confirm_password)) {
       header("Location: http://localhost/index.php?message=emptyfield", true, 302);
     }
 
-    // Save the file to disk
-    move_uploaded_file($tmp, '/app/public/images/' . $image);
-
-    $query = "INSERT INTO photos(image, title, description, filter) VALUES('$image', '$title', '$description', '$filter')";
+    $query = "INSERT INTO users(email, first_name, last_name, password, last_login, satus) VALUES('$email', '$first_name', '$last_name', '$password', '$date', '$status')";
     // save the photo entry to the database
     if ($this->connect()->query($query)) {
       header("Location: http://localhost/index.php?message=saved", true, 302);
@@ -104,23 +104,19 @@ class User {
   }
 
    /**
-    * Edit photo
+    * Edit User
     *
     * @param {Array} data to update in the database
     * @return {String} status message
     */
-    public function updatePhoto($data) {
-      $title = $data['title'];
-      $description = $data['description'];
+    public function updateUser($data) {
       $id = $data['id'];
-      $image = $data['image'];
-      $filter = $data['filter'];
+      $email = $data['email'];
+      $first_name = $data['first_name'];
+      $last_name = $data['last_name'];
+      $password = $data['password'];
 
-      if (!$this->isImage($image)) {
-        header("Location: http://localhost/index.php?message=notImage", true, 302);
-      }
-
-      $query = "UPDATE photos SET title='" . $title . "', description='" . $description . "', filter='" . $filter . "' WHERE id=" . $id;
+      $query = "UPDATE users SET email='" . $email . "', first_name='" . $first_name . "', last_name='" . $last_name . "', password='" . $password . "' WHERE id=" . $id;
       // save the photo entry to the database
 
       if ($this->connect()->query($query)) {
@@ -131,13 +127,13 @@ class User {
     }
 
   /**
-   * Delete
+   * Delete User
    *
-   * @param {id} id of the photo to delete
+   * @param {id} id of the user to delete
    * @return {String} status message
    */
-   public function deletePhoto($id) {
-     $query = 'DELETE FROM photos WHERE id =' . $id;
+   public function deleteUser($id) {
+     $query = 'DELETE FROM users WHERE id =' . $id;
      $res = $this->connect()->query($query);
 
      if ($res === false) {
@@ -145,18 +141,4 @@ class User {
      }
      return 'deleteSuccess';
    }
-
-  /**
-   * isImage
-   *
-   * @param {String} $path path/to/image
-   * @return {Boolean} if the image checks out return true
-  */
-  private function isImage($path) {
-    if (exif_imagetype($path) === false) {
-      return false;
-    }
-
-    return true;
-  }
 }

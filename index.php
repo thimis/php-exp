@@ -12,5 +12,4 @@
   	</section>
   </header>
 
-
 <?php include_once(dirname('.') . '/includes/footer.inc'); ?>
