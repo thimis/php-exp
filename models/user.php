@@ -43,7 +43,7 @@ class User {
    */
    public function allUsers() {
      $rows = array();
-     $query = 'SELECT * FROM users';
+     $query = 'SELECT id, email, first_name, last_name, last_login FROM users';
      $res = $this->connect()->query($query);
 
      if ($res === false) {
@@ -66,7 +66,7 @@ class User {
    */
   public function singleUser($id) {
     $row = array();
-    $query = 'SELECT * FROM users WHERE id = ' . $id;
+    $query = 'SELECT id, email, first_name, last_name, last_login FROM users WHERE id = ' . $id;
     $res = $this->connect()->query($query);
 
     if ($res === false) {
@@ -82,6 +82,9 @@ class User {
    * Redirect after query
    */
   public function createUser($data) {
+
+    $process = $this->processFormData($data);
+
     $email = $data['email'];
     $first_name = $data['first_name'];
     $last_name = $data['last_name'];
@@ -89,18 +92,17 @@ class User {
     $confirm_password = $data['confirm_password'];
     $date = getdate()[0];
     $status = 'preactivated';
-    // Handle empty email or password
-    if (empty($email) || empty($password) || empty($confirm_password)) {
-      header("Location: http://localhost/index.php?message=emptyfield", true, 302);
+
+    if ($process) {
+      $query = "INSERT INTO users(email, first_name, last_name, password, last_login, status) VALUES('$email', '$first_name', '$last_name', '$password', '$date', '$status')";
+      // save the user to the database
+      if ($this->connect()->query($query)) {
+        header("Location: http://localhost/index.php?message=saved", true, 302);
+      } else {
+        header("Location: http://localhost/index.php?message=notsaved", true, 302);
+      }
     }
 
-    $query = "INSERT INTO users(email, first_name, last_name, password, last_login, satus) VALUES('$email', '$first_name', '$last_name', '$password', '$date', '$status')";
-    // save the photo entry to the database
-    if ($this->connect()->query($query)) {
-      header("Location: http://localhost/index.php?message=saved", true, 302);
-    } else {
-      header("Location: http://localhost/index.php?message=notsaved", true, 302);
-    }
   }
 
    /**
@@ -141,4 +143,20 @@ class User {
      }
      return 'deleteSuccess';
    }
+
+
+   private function processFormData($form) {
+     $ret = $form;
+
+     // Handle empty email or password
+     if (empty($form['email']) || empty($form['password']) || empty($form['confirm_password'])) {
+       header("Location: http://localhost/index.php?message=emptyfield", true, 302);
+     } elseif (!($form['password'] == $form['confirm_password'])) {
+       header("Location: http://localhost/index.php?message=passwordMismatch", true, 302);
+     } elseif ($this->connect()->query('SELECT * FROM users WHERE email = "' . $form["email"] . '"')->num_rows > 0) {
+      header("Location: http://localhost/index.php?message=emailTaken", true, 302);
+    } else {
+      return true;
+    }
+  }
 }

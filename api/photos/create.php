@@ -21,4 +21,4 @@
   );
 
   // integrate the surrounding code into the photo class
-  $Photo->savePhoto($photoArray);
+   $Photo->savePhoto($photoArray);

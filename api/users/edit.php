@@ -1,63 +1,48 @@
 <?php
-  include_once('../../' . dirname('.') . '/includes/header.inc');
-  include_once('../../' . dirname('.') . '/lib/db.php');
-  include_once('../../' . dirname('.') . '/models/photo.php');
+  include_once('../../includes/header.inc');
+  include_once('../../models/user.php');
 
   $id = $_GET['id'];
-  $PhotoClass = new Photo();
-  $photo = $PhotoClass->singlePhoto($id);
+  $UserClass = new User();
+  $user = $UserClass->singleUser($id);
 ?>
 
 
-
 <div class="container">
-
   <div class="row">
     <div class="column">
-      <nav id="filters">
-        <a class="button button-outline" href="#" data-filter="none">None</a>
-        <a class="button button-outline" href="#" data-filter="reyes">Reyes</a>
-        <a class="button button-outline" href="#" data-filter="perpetua">Perpetua</a>
-        <a class="button button-outline" href="#" data-filter="toaster">Toaster</a>
-        <a class="button button-outline" href="#" data-filter="walden">Walden</a>
-        <a class="button button-outline" href="#" data-filter="aden">Aden</a>
-        <a class="button button-outline" href="#" data-filter="inkwell">Inkwell</a>
-        <a class="button button-outline" href="#" data-filter="xpro2">Xpro II</a>
-        <a class="button button-outline" href="#" data-filter="nashville">Nashville</a>
-      </nav>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="column">
-      <form enctype="multipart/form-data" action="/photo/<?php echo $photo['id']; ?>/update" method="POST">
+      <form enctype="multipart/form-data" action="/user/<?php $user[$id]; ?>/update" method="POST">
 
-        <!-- Hidden id field -->
-        <input type="hidden" name="id" value="<?php echo $photo['id']; ?>">
+        <!-- Email field -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Email address" name="email" value="<?php echo $user["email"]; ?>">
 
-        <!-- Hidden filter field -->
-        <input id="filterInput" type="hidden" name="filter" value="">
+        <!-- First Name / Last Name -->
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" placeholder="First Name" name="first_name" value="<?php echo $user["first_name"]; ?>">
 
-        <!-- Hidden image field -->
-        <input type="hidden" name="image" value="<?php echo $photo['image']; ?>">
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" placeholder="Last Name" name="last_name" value="<?php echo $user["last_name"]; ?>">
 
-        <!-- Image -->
-        <figure id="image" class="<?php echo $photo['filter']; ?>">
-          <img src="/images/<?php echo $photo['image']; ?>" />
-        </figure>
+        <!-- Password / Confirm Password -->
+        <label for="old_password">Old Password:</label>
+        <input type="password" id="old_password" name="old_password">
 
-
-        <!-- Title/Description fields -->
-          <label for="title">Title:</label>
-          <input type="text" class="form-control" id="title" placeholder="Message" name="title" value="<?php echo $photo['title']; ?>">
-
-          <label class="f2 mb2 db" for="description">Description:</label>
-          <textarea class="db w-100" type="text" class="form-control" id="message" placeholder="Description" name="description" rows="6"><?php echo $photo['description']; ?></textarea>
+        <label for="new_password">New Password:</label>
+        <input type="password" id="new_password" name="new_password">
 
         <!-- Submit Button -->
-        <button type="submit" class="button button-outline">Submit</button>
+        <button type="submit" class="button button-outline">Edit User</button>
+
       </form>
+
     </div>
   </div>
 </div>
+
+
+
+
+
 <?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>

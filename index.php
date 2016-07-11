@@ -12,4 +12,12 @@
   	</section>
   </header>
 
+  <section class="header">
+  	<div class="container">
+  		<h1 class="title">Create a user today</h1>
+  		<p class="description">This account will allow you to upload and add filters to your photos</p>
+  		<a class="button" href="/user/new">Create Account</a>
+  	</div>
+  </section>
+
 <?php include_once(dirname('.') . '/includes/footer.inc'); ?>

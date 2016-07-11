@@ -19,6 +19,10 @@ if (!empty($_GET["message"])) {
     $alert = '<div class="alert alert-danger" role="alert">Unable to edit photo.</div>';
   } elseif($message == 'notImage') {
     $alert = '<div class="alert alert-warning" role="alert">Please upload images only.</div>';
+  } elseif($message == 'passwordMismatch') {
+    $alert = '<div class="alert alert-danger" role="alert">Passwords do not match.</div>';
+  } elseif($message == 'emailTaken') {
+    $alert = '<div class="alert alert-warning" role="alert">That email address is already in use.</div>';
   }
 }
 ?>
