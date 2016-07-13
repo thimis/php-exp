@@ -1,3 +1,13 @@
+<?php
+  ini_set('session.save_path', '/tmp');
+  session_start();
+  echo session_id();
+
+  echo '<pre>';
+  print_r($_SESSION);
+  echo '</pre>';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

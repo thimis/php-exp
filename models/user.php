@@ -2,10 +2,9 @@
 /* User model
  *
  * @TODO: Change flash messages for user specific messages
- * @TODO: Add form validation & sanitize input
- * @TODO: Handle session & cookies & tokens
+ * 
+ *
  */
-
 
 class User {
 
@@ -82,13 +81,12 @@ class User {
    * Redirect after query
    */
   public function createUser($data) {
-
     $process = $this->processFormData($data);
-
     $email = $data['email'];
     $first_name = $data['first_name'];
     $last_name = $data['last_name'];
-    $password = $data['password'];
+    $passwordRaw = $data['password'];
+    $password = $this->encryptPassword($passwordRaw);
     $confirm_password = $data['confirm_password'];
     $date = getdate()[0];
     $status = 'preactivated';
@@ -97,66 +95,117 @@ class User {
       $query = "INSERT INTO users(email, first_name, last_name, password, last_login, status) VALUES('$email', '$first_name', '$last_name', '$password', '$date', '$status')";
       // save the user to the database
       if ($this->connect()->query($query)) {
-        header("Location: http://localhost/index.php?message=saved", true, 302);
+        header("Location: http://localhost/index.php?message=saved");
       } else {
-        header("Location: http://localhost/index.php?message=notsaved", true, 302);
+        header("Location: http://localhost/index.php?message=notsaved");
       }
     }
 
   }
 
-   /**
-    * Edit User
-    *
-    * @param {Array} data to update in the database
-    * @return {String} status message
-    */
-    public function updateUser($data) {
-      $id = $data['id'];
-      $email = $data['email'];
-      $first_name = $data['first_name'];
-      $last_name = $data['last_name'];
-      $password = $data['password'];
-
-      $query = "UPDATE users SET email='" . $email . "', first_name='" . $first_name . "', last_name='" . $last_name . "', password='" . $password . "' WHERE id=" . $id;
-      // save the photo entry to the database
-
-      if ($this->connect()->query($query)) {
-        header("Location: http://localhost/api/photo.php?message=editSuccess&id=" . $id, true, 302);
-      } else {
-        header("Location: http://localhost/api/photo.php?message=editFail&id=" . $id, true, 302);
-      }
-    }
-
   /**
-   * Delete User
+   * Edit User
    *
-   * @param {id} id of the user to delete
+   * @param {Array} data to update in the database
    * @return {String} status message
    */
-   public function deleteUser($id) {
-     $query = 'DELETE FROM users WHERE id =' . $id;
-     $res = $this->connect()->query($query);
+   public function updateUser($data) {
+     $id = $data['id'];
+     $email = $data['email'];
+     $first_name = $data['first_name'];
+     $last_name = $data['last_name'];
+     $password = $this->encryptPassword($data['password']);
 
-     if ($res === false) {
-       return 'deleteFail';
+     $query = "UPDATE users SET email='" . $email . "', first_name='" . $first_name . "', last_name='" . $last_name . "', password='" . $password . "' WHERE id=" . $id;
+     // save the photo entry to the database
+
+     if ($this->connect()->query($query)) {
+       header("Location: http://localhost/api/photo.php?message=editSuccess&id=" . $id, true, 302);
+     } else {
+       header("Location: http://localhost/api/photo.php?message=editFail&id=" . $id, true, 302);
      }
-     return 'deleteSuccess';
    }
 
+ /**
+  * Delete User
+  *
+  * @param {id} id of the user to delete
+  * @return {String} status message
+  */
+  public function deleteUser($id) {
+    $query = 'DELETE FROM users WHERE id =' . $id;
+    $res = $this->connect()->query($query);
 
-   private function processFormData($form) {
-     $ret = $form;
+    if ($res === false) {
+      return 'deleteFail';
+    }
+    return 'deleteSuccess';
+  }
 
-     // Handle empty email or password
-     if (empty($form['email']) || empty($form['password']) || empty($form['confirm_password'])) {
-       header("Location: http://localhost/index.php?message=emptyfield", true, 302);
+  /**
+   * User Login
+   * @param {Array} $credentials is the user's login information from the form
+   */
+  public function login($credentials) {
+    $password = $credentials['password'];
+    $hashed = $this->getUserPass($credentials['id']);
+
+    if (password_verify($password, getUserPass($hashed))) {
+      // User logged in
+    } else {
+      // Return error
+    }
+  }
+
+
+   /**  PRIVATE FUNCTIONS
+    *
+    *
+    */
+
+  /**
+   * Process Form Data
+   * @param {Array} $form data to be processed from the signup page
+   * @return {Boolean} reroute if false otherwise return true
+   */
+  private function processFormData($form) {
+    $ret = $form;
+
+    // Handle empty email or password
+    if (empty($form['email']) || empty($form['password']) || empty($form['confirm_password'])) {
+      header("Location: http://localhost/index.php?message=emptyfield", true, 302);
      } elseif (!($form['password'] == $form['confirm_password'])) {
-       header("Location: http://localhost/index.php?message=passwordMismatch", true, 302);
-     } elseif ($this->connect()->query('SELECT * FROM users WHERE email = "' . $form["email"] . '"')->num_rows > 0) {
+      header("Location: http://localhost/index.php?message=passwordMismatch", true, 302);
+    } elseif ($this->connect()->query('SELECT * FROM users WHERE email = "' . $form["email"] . '"')->num_rows > 0) {
       header("Location: http://localhost/index.php?message=emailTaken", true, 302);
     } else {
       return true;
     }
+  }
+
+ /**
+  * Encrypt Password
+  * @param {String} $raw plaintext password
+  * @return {String} encrypted password
+  */
+  private function encryptPassword($raw) {
+    $salt = uniqid(mt_rand(), true);
+    $options = array(
+      'salt' => $salt,
+      'cost' => 12 // default is 10
+    );
+    $password = password_hash($raw, PASSWORD_DEFAULT);
+    return $password;
+  }
+
+  private function getUserPass($id) {
+    $row = array();
+    $query = 'SELECT password FROM users WHERE id = ' . $id;
+    $res = $this->connect()->query($query);
+
+    if ($res === false) {
+      return false;
+    }
+    return $res->fetch_assoc()['password'];
   }
 }

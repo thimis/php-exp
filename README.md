@@ -15,3 +15,6 @@ and to get better with php
  - Run the docker image at pburris/php-exp
  - Goto the url localhost/bootstrap.php to add the database and table to the MySQL db
  - Start adding/deleting/editing photo posts
+ - You can also clone this repo, build the image and run it like so: 
+ - `docker run -d -v /path/to/cloned/folder:/app -p 80:80 -p 3306:3306  pburris/php-exp`
+

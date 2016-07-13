@@ -20,4 +20,4 @@
   	</div>
   </section>
 
-<?php include_once(dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('/includes/footer.inc'); ?>

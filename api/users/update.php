@@ -1,7 +1,8 @@
 <?php
 // Includes
-include_once('../../' . dirname('.') . '/lib/db.php');
-include_once('../../' . dirname('.') . '/models/photo.php');
+include_once('../../lib/db.php');
+include_once('../../models/photo.php');
+include_once('../../includes/header.inc');
 
 $photo = $_POST;
 $photoArray = array(
