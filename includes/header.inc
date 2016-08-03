@@ -1,11 +1,5 @@
 <?php
-  ini_set('session.save_path', '/tmp');
-  session_start();
-  echo session_id();
-
-  echo '<pre>';
-  print_r($_SESSION);
-  echo '</pre>';
+include_once('/app/includes/session.php');
 ?>
 
 <!DOCTYPE html>
@@ -27,12 +21,24 @@
 				<h1 class="title">Photo Upload Service</h1>
 			</a>
 			<ul class="navigation-list float-right">
-				<li class="navigation-item">
-					<a class="navigation-link" href="/photos">All Photos</a>
-				</li>
-				<li class="navigation-item">
-					<a class="navigation-link" href="/photo/new">New Photo</a>
-				</li>
+        <li class="navigation-item">
+          <a class="navigation-link" href="/photos">All Photos</a>
+        </li>
+        <?php if (isset($session) && $session->get('user.loggedin')): ?>
+          <li class="navigation-item">
+            <a class="navigation-link" href="/photo/new">New Photo</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="/user/<?php echo $session->get('user.id'); ?>">Account</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="/user/logout">Logout</a>
+          </li>
+        <?php else: ?>
+          <li class="navigation-item">
+            <a class="navigation-link" href="/user/new">Sign up</a>
+          </li>
+        <?php endif; ?>
 			</ul>
 		</section>
 	</nav>

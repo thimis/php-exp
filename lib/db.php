@@ -75,5 +75,10 @@ class Db {
      return $connection->error;
    }
 
+   public function currentId() {
+     $con = $this->connect();
+     return mysqli_insert_id($con);
+   }
+
 
 }

@@ -2,7 +2,7 @@
 /* User model
  *
  * @TODO: Change flash messages for user specific messages
- * 
+ *
  *
  */
 
@@ -66,6 +66,27 @@ class User {
   public function singleUser($id) {
     $row = array();
     $query = 'SELECT id, email, first_name, last_name, last_login FROM users WHERE id = ' . $id;
+
+    $res = $this->connect()->query($query);
+
+    if ($res === false) {
+      return false;
+    }
+    return $res->fetch_assoc();
+  }
+
+
+  /**
+   * Email to Id
+   *
+   * @param {String} $email of the user to get from the database
+   * @return {Boolean | Object} false on a failure and a single user on success
+   * @TODO: only get the fields that are needed, not password or anything sensitive
+   */
+  public function emailToId($email) {
+    $row = array();
+    $query = 'SELECT id FROM users WHERE email = "' . $email . '"';
+
     $res = $this->connect()->query($query);
 
     if ($res === false) {
@@ -80,7 +101,8 @@ class User {
    * @param {Array} data to save in the database
    * Redirect after query
    */
-  public function createUser($data) {
+  public function createUser($data, $session) {
+
     $process = $this->processFormData($data);
     $email = $data['email'];
     $first_name = $data['first_name'];
@@ -95,6 +117,8 @@ class User {
       $query = "INSERT INTO users(email, first_name, last_name, password, last_login, status) VALUES('$email', '$first_name', '$last_name', '$password', '$date', '$status')";
       // save the user to the database
       if ($this->connect()->query($query)) {
+        $session->put('user', $this->singleUser($this->db->currentId()));
+        $session->put('user.loggedin', true);
         header("Location: http://localhost/index.php?message=saved");
       } else {
         header("Location: http://localhost/index.php?message=notsaved");
@@ -109,7 +133,7 @@ class User {
    * @param {Array} data to update in the database
    * @return {String} status message
    */
-   public function updateUser($data) {
+   public function updateUser($data, $session) {
      $id = $data['id'];
      $email = $data['email'];
      $first_name = $data['first_name'];
@@ -120,6 +144,9 @@ class User {
      // save the photo entry to the database
 
      if ($this->connect()->query($query)) {
+       $session->put('user.email', $email);
+       $session->put('user.first_name', $first_name);
+       $session->put('user.last_name', $last_name);
        header("Location: http://localhost/api/photo.php?message=editSuccess&id=" . $id, true, 302);
      } else {
        header("Location: http://localhost/api/photo.php?message=editFail&id=" . $id, true, 302);
@@ -132,13 +159,14 @@ class User {
   * @param {id} id of the user to delete
   * @return {String} status message
   */
-  public function deleteUser($id) {
+  public function deleteUser($id, $session) {
     $query = 'DELETE FROM users WHERE id =' . $id;
     $res = $this->connect()->query($query);
 
     if ($res === false) {
       return 'deleteFail';
     }
+    $session->destroy();
     return 'deleteSuccess';
   }
 
@@ -146,14 +174,18 @@ class User {
    * User Login
    * @param {Array} $credentials is the user's login information from the form
    */
-  public function login($credentials) {
-    $password = $credentials['password'];
-    $hashed = $this->getUserPass($credentials['id']);
+  public function login($credentials, $session) {
 
-    if (password_verify($password, getUserPass($hashed))) {
-      // User logged in
+    $password = $credentials['password'];
+    $id = $this->emailToId($credentials['email'])['id'];
+    $hashed = $this->getUserPass($id);
+
+    if (password_verify($password, $hashed)) {
+      $session->put('user', $this->singleUser($id));
+      $session->put('user.loggedin', true);
+      return true;
     } else {
-      // Return error
+      return false;
     }
   }
 
