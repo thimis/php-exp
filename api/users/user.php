@@ -1,11 +1,13 @@
 <?php
 // Includes
-include_once('../../includes/header.inc');
-include_once('../../models/user.php');
+include_once('/app/includes/header.inc');
+include_once('/app/models/user.php');
 
 $id = $_GET['id'];
 $UserClass = new User();
 $user = $UserClass->singleUser($id);
+
+
 
 ?>
 
@@ -14,4 +16,4 @@ $user = $UserClass->singleUser($id);
    ?>
 </pre>
 
-<?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('/app/includes/footer.inc'); ?>

@@ -1,5 +1,5 @@
 <?php
-  include_once('../../includes/header.inc');
+  include_once('/app/includes/header.inc');
 
   if ($session->get('user.loggedin')) {
     header("Location: http://localhost/photos/", true, 302);
@@ -24,3 +24,5 @@
     </form>
 
 </div>
+
+<?php include_once('/app/includes/footer.inc'); ?>

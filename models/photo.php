@@ -6,7 +6,7 @@ class Photo {
 
 
   public function __construct() {
-    include_once('../../' . dirname('.') . '/lib/db.php');
+    include_once('/app/lib/db.php');
     $this->db = new Db("photoApp");
   }
 
@@ -24,6 +24,7 @@ class Photo {
     if (self::$connection === false) {
       // Handle error here
       return false;
+      echo 'Connection unsuccessful';
     }
     return self::$connection;
   }
@@ -36,7 +37,7 @@ class Photo {
    public function allPhotos() {
      $rows = array();
      $query = 'SELECT * FROM photos';
-     $res = $this->connect()->query($query);
+     $res = $this->db->query($query);
 
      if ($res === false) {
        return false;
@@ -57,13 +58,16 @@ class Photo {
    */
   public function singlePhoto($id) {
     $row = array();
-    $query = 'SELECT * FROM photos WHERE id = ' . $id;
-    $res = $this->connect()->query($query);
+    $query = 'SELECT * FROM photos WHERE id = ' . $id . ';';
+
+    $res = $this->db->query($query);
 
     if ($res === false) {
       return false;
     }
-    return $res->fetch_assoc();
+    $res = $res->fetch_assoc();
+    $res['user'] = $this->getUser($res['user_id']);
+    return $res;
   }
 
   /**
@@ -78,10 +82,10 @@ class Photo {
     $image = $data['image'];
     $tmp = $data['temp'];
     $filter = 'none';
+    $user_id = $data['user_id'];
 
     if (!$this->isImage($tmp)) {
       header("Location: http://localhost/photo/new?message=notImage", true, 302);
-      return false;
     }
 
     if (empty($title) ||
@@ -94,9 +98,9 @@ class Photo {
     // Save the file to disk
     move_uploaded_file($tmp, '/app/public/images/' . $image);
 
-    $query = "INSERT INTO photos(image, title, description, filter) VALUES('$image', '$title', '$description', '$filter')";
+    $query = "INSERT INTO photos(image, title, description, filter, user_id) VALUES('$image', '$title', '$description', '$filter', '$user_id')";
     // save the photo entry to the database
-    if ($this->connect()->query($query)) {
+    if ($this->db->query($query)) {
       header("Location: http://localhost/index.php?message=saved", true, 302);
     } else {
       header("Location: http://localhost/index.php?message=notsaved", true, 302);
@@ -123,7 +127,7 @@ class Photo {
       $query = "UPDATE photos SET title='" . $title . "', description='" . $description . "', filter='" . $filter . "' WHERE id=" . $id;
       // save the photo entry to the database
 
-      if ($this->connect()->query($query)) {
+      if ($this->db->query($query)) {
         header("Location: http://localhost/api/photo.php?message=editSuccess&id=" . $id, true, 302);
       } else {
         header("Location: http://localhost/api/photo.php?message=editFail&id=" . $id, true, 302);
@@ -138,7 +142,7 @@ class Photo {
    */
    public function deletePhoto($id) {
      $query = 'DELETE FROM photos WHERE id =' . $id;
-     $res = $this->connect()->query($query);
+     $res = $this->db->query($query);
 
      if ($res === false) {
        return 'deleteFail';
@@ -158,5 +162,21 @@ class Photo {
     }
 
     return true;
+  }
+
+  /**
+   * getUser
+   *
+   * @param {Number} $user_id is the id of the user that posted the image
+   * @return {Array} $ret return an array with user information
+   */
+  private function getUser($user_id) {
+    include_once('/app/models/user.php');
+    $UserClass = new User();
+    $user = $UserClass->singleUser($user_id);
+    $ret['name'] = $user['first_name'] . ' ' . $user['last_name'];
+    $ret['email'] = $user['email'];
+    $ret['id'] = $user_id;
+    return $ret;
   }
 }

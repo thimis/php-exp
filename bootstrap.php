@@ -6,14 +6,10 @@ function createDatabases($ip) {
   $mysql = new mysqli($ip, "root");
 
   // photoApp database
-  if ($mysql->query("CREATE DATABASE IF NOT EXISTS photoApp")) {
-    echo "photoApp database created!\n";
-  }
+  $mysql->query("CREATE DATABASE IF NOT EXISTS photoApp");
 
   // userDB database
-  if ($mysql->query("CREATE DATABASE IF NOT EXISTS userDB")) {
-    echo "userDB database created!\n";
-  }
+  $mysql->query("CREATE DATABASE IF NOT EXISTS userDB");
 };
 
 
@@ -27,6 +23,7 @@ function createTables($ip) {
   // Create photos table query
   $photoTable = "CREATE TABLE IF NOT EXISTS photos (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
     image VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(500) NOT NULL,
@@ -45,21 +42,13 @@ function createTables($ip) {
     UNIQUE KEY (email)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=42";
 
-
   // Run create photos table query
-  if ($photoApp->query($photoTable)) {
-    echo "Photo table Created!\n";
-  } else {
-    echo "Photo table not created\n";
-  }
+  $photoApp->query($photoTable);
 
   // Run create users table query
-  if ($userDB->query($usersTable)) {
-    echo "Users table Created!\n";
-  } else {
-    echo "Users table not created\n";
-  }
+  $userDB->query($usersTable);
 };
+
 
 $host= gethostname();
 $ip = gethostbyname($host);

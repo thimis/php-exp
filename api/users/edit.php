@@ -1,8 +1,13 @@
 <?php
-  include_once('../../includes/header.inc');
-  include_once('../../models/user.php');
+  include_once('/app/includes/header.inc');
+  include_once('/app/models/user.php');
 
   $id = $_GET['id'];
+
+  if (!($session->get('user.id') == $id)) {
+    header("Location: http://localhost/photos?message=notAllowed", true, 302);
+  }
+
   $UserClass = new User();
   $user = $UserClass->singleUser($id);
 ?>
@@ -45,4 +50,4 @@
 
 
 
-<?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('/app/includes/footer.inc'); ?>

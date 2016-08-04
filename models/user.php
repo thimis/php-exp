@@ -12,7 +12,7 @@ class User {
 
 
   public function __construct() {
-    include_once('../../lib/db.php');
+    include_once('/app/lib/db.php');
     $this->db = new Db("userDB");
   }
 
@@ -43,7 +43,7 @@ class User {
    public function allUsers() {
      $rows = array();
      $query = 'SELECT id, email, first_name, last_name, last_login FROM users';
-     $res = $this->connect()->query($query);
+     $res = $this->db->query($query);
 
      if ($res === false) {
        return false;
@@ -67,7 +67,7 @@ class User {
     $row = array();
     $query = 'SELECT id, email, first_name, last_name, last_login FROM users WHERE id = ' . $id;
 
-    $res = $this->connect()->query($query);
+    $res = $this->db->query($query);
 
     if ($res === false) {
       return false;
@@ -87,7 +87,7 @@ class User {
     $row = array();
     $query = 'SELECT id FROM users WHERE email = "' . $email . '"';
 
-    $res = $this->connect()->query($query);
+    $res = $this->db->query($query);
 
     if ($res === false) {
       return false;
@@ -116,7 +116,7 @@ class User {
     if ($process) {
       $query = "INSERT INTO users(email, first_name, last_name, password, last_login, status) VALUES('$email', '$first_name', '$last_name', '$password', '$date', '$status')";
       // save the user to the database
-      if ($this->connect()->query($query)) {
+      if ($this->db->query($query)) {
         $session->put('user', $this->singleUser($this->db->currentId()));
         $session->put('user.loggedin', true);
         header("Location: http://localhost/index.php?message=saved");
@@ -143,7 +143,7 @@ class User {
      $query = "UPDATE users SET email='" . $email . "', first_name='" . $first_name . "', last_name='" . $last_name . "', password='" . $password . "' WHERE id=" . $id;
      // save the photo entry to the database
 
-     if ($this->connect()->query($query)) {
+     if ($this->db->query($query)) {
        $session->put('user.email', $email);
        $session->put('user.first_name', $first_name);
        $session->put('user.last_name', $last_name);
@@ -161,7 +161,7 @@ class User {
   */
   public function deleteUser($id, $session) {
     $query = 'DELETE FROM users WHERE id =' . $id;
-    $res = $this->connect()->query($query);
+    $res = $this->db->query($query);
 
     if ($res === false) {
       return 'deleteFail';
@@ -208,7 +208,7 @@ class User {
       header("Location: http://localhost/index.php?message=emptyfield", true, 302);
      } elseif (!($form['password'] == $form['confirm_password'])) {
       header("Location: http://localhost/index.php?message=passwordMismatch", true, 302);
-    } elseif ($this->connect()->query('SELECT * FROM users WHERE email = "' . $form["email"] . '"')->num_rows > 0) {
+    } elseif ($this->db->query('SELECT * FROM users WHERE email = "' . $form["email"] . '"')->num_rows > 0) {
       header("Location: http://localhost/index.php?message=emailTaken", true, 302);
     } else {
       return true;
@@ -233,7 +233,7 @@ class User {
   private function getUserPass($id) {
     $row = array();
     $query = 'SELECT password FROM users WHERE id = ' . $id;
-    $res = $this->connect()->query($query);
+    $res = $this->db->query($query);
 
     if ($res === false) {
       return false;

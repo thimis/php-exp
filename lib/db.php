@@ -2,7 +2,7 @@
 
 class Db {
 
-  protected static $connection;
+  private $connection;
   private $db;
 
   function __construct($db) {
@@ -15,16 +15,17 @@ class Db {
    */
   public function connect() {
     // Try to connect
-    if (!isset(self::$connection)) {
-      self::$connection = new mysqli("localhost", "root", NULL, $this->db);
+    if (!isset($this->connection)) {
+      $this->connection = new mysqli("localhost", "root", NULL, $this->db);
     }
 
     // If the connection is not successful, handle error.
-    if (self::$connection === false) {
+    if ($this->connection === false) {
       // Handle error here
       return false;
+      echo 'Connection unsuccessful';
     }
-    return self::$connection;
+    return $this->connection;
   }
 
   /**
@@ -39,6 +40,9 @@ class Db {
 
      // Perform the query
      $ret = $connection->query($query);
+
+     $connection->close();
+     unset($this->connection);
 
      return $ret;
    }

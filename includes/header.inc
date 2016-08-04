@@ -1,6 +1,11 @@
 <?php
 include_once('/app/includes/session.php');
+error_reporting(E_ALL);
+ini_set('display_errors',1);
 ?>
+<pre style="font-size: 10px;">
+  <?php print_r($session->get('user')); ?>
+</pre>
 
 <!DOCTYPE html>
 <html lang="en">

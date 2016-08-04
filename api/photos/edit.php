@@ -1,11 +1,15 @@
 <?php
-  include_once('../../' . dirname('.') . '/includes/header.inc');
-  include_once('../../' . dirname('.') . '/lib/db.php');
-  include_once('../../' . dirname('.') . '/models/photo.php');
+  include_once('/app/includes/header.inc');
+  include_once('/app/lib/db.php');
+  include_once('/app/models/photo.php');
 
   $id = $_GET['id'];
   $PhotoClass = new Photo();
   $photo = $PhotoClass->singlePhoto($id);
+
+  if (!($session->get('user.id') == $photo['user_id'])) {
+    header("Location: http://localhost/photos?message=notAllowed", true, 302);
+  }
 ?>
 
 
@@ -15,15 +19,15 @@
   <div class="row">
     <div class="column">
       <nav id="filters">
-        <a class="button button-outline" href="#" data-filter="none">None</a>
-        <a class="button button-outline" href="#" data-filter="reyes">Reyes</a>
-        <a class="button button-outline" href="#" data-filter="perpetua">Perpetua</a>
-        <a class="button button-outline" href="#" data-filter="toaster">Toaster</a>
-        <a class="button button-outline" href="#" data-filter="walden">Walden</a>
-        <a class="button button-outline" href="#" data-filter="aden">Aden</a>
-        <a class="button button-outline" href="#" data-filter="inkwell">Inkwell</a>
-        <a class="button button-outline" href="#" data-filter="xpro2">Xpro II</a>
-        <a class="button button-outline" href="#" data-filter="nashville">Nashville</a>
+        <a class="button button-outline" href="#filters" data-filter="none">None</a>
+        <a class="button button-outline" href="#filters" data-filter="reyes">Reyes</a>
+        <a class="button button-outline" href="#filters" data-filter="perpetua">Perpetua</a>
+        <a class="button button-outline" href="#filters" data-filter="toaster">Toaster</a>
+        <a class="button button-outline" href="#filters" data-filter="walden">Walden</a>
+        <a class="button button-outline" href="#filters" data-filter="aden">Aden</a>
+        <a class="button button-outline" href="#filters" data-filter="inkwell">Inkwell</a>
+        <a class="button button-outline" href="#filters" data-filter="xpro2">Xpro II</a>
+        <a class="button button-outline" href="#filters" data-filter="nashville">Nashville</a>
       </nav>
     </div>
   </div>
@@ -60,4 +64,4 @@
     </div>
   </div>
 </div>
-<?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('/app/includes/footer.inc'); ?>

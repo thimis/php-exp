@@ -1,8 +1,8 @@
   <?php
 
   // Includes
-  include_once('../../' . dirname('.') . '/lib/db.php');
-  include_once('../../' . dirname('.') . '/models/photo.php');
+  include_once('/app/lib/db.php');
+  include_once('/app/models/photo.php');
 
   // POST params + Image file
   $body = $_POST;
@@ -17,7 +17,8 @@
     "description" => $body["description"],
     "image" => $fileName,
     "temp" => $fileTmpName,
-    "filter" => $body["filter"]
+    "filter" => $body["filter"],
+    "user_id" => $body["user_id"],
   );
 
   // integrate the surrounding code into the photo class

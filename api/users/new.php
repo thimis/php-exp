@@ -1,5 +1,5 @@
 <?php
-  include_once('../../includes/header.inc');
+  include_once('/app/includes/header.inc');
 ?>
 
 <div class="container">
@@ -31,4 +31,4 @@
 
 </div>
 
-<?php include_once('../../includes/footer.inc'); ?>
+<?php include_once('/app/includes/footer.inc'); ?>

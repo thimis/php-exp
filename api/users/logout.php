@@ -1,5 +1,5 @@
 <?php
-  include_once('../../includes/header.inc');
+  include_once('/app/includes/header.inc');
 
   $session->put('user', null);
   $session->destroy();

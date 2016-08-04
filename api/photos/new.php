@@ -1,5 +1,5 @@
 <?php
-  include_once('../../' . dirname('.') . '/includes/header.inc');
+  include_once('/app/includes/header.inc');
 ?>
 
 <div class="container">
@@ -21,6 +21,9 @@
         <label for="description">Description:</label>
         <textarea type="text" id="" placeholder="Description" name="description" rows="6"></textarea>
 
+        <!-- Hidden user_id field -->
+        <input type="hidden" name="user_id" value="<?php echo $session->get('user.id'); ?>">
+
       <!-- Submit Button -->
       <button type="submit" class="button button-outline">Submit</button>
 
@@ -28,4 +31,4 @@
 
 </div>
 
-<?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('/app/includes/footer.inc'); ?>

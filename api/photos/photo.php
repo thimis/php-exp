@@ -1,14 +1,17 @@
 <?php
 // Includes
-include_once('../../' . dirname('.') . '/includes/header.inc');
-include_once('../../' . dirname('.') . '/lib/db.php');
-include_once('../../' . dirname('.') . '/models/photo.php');
+include_once('/app/includes/header.inc');
+include_once('/app/lib/db.php');
+include_once('/app/models/photo.php');
+include_once('/app/models/user.php');
 
 $id = $_GET['id'];
 $PhotoClass = new Photo();
+
 $photo = $PhotoClass->singlePhoto($id);
 
 ?>
+
 
 <div class="container photo--container">
 
@@ -18,6 +21,7 @@ $photo = $PhotoClass->singlePhoto($id);
         <img src="/images/<?php echo $photo['image']; ?>" />
       </figure>
       <h1 class="photo--title"><?php echo $photo['title']; ?></h1>
+      <span class="photo--author"><?php echo $photo['user']['name'] . ' - ' . $photo['user']['email']; ?></span>
       <p class="photo--description">
         <?php echo $photo['description']; ?>
       </p>
@@ -33,4 +37,4 @@ $photo = $PhotoClass->singlePhoto($id);
 
 </div>
 
-<?php include_once('../../' . dirname('.') . '/includes/footer.inc'); ?>
+<?php include_once('/app/includes/footer.inc'); ?>
