@@ -1,6 +1,6 @@
 <?php
 
-// Create the Databases
+// Create the Database
 function createDatabases($ip) {
   // MYSQL connection
   $mysql = new mysqli($ip, "root");
@@ -8,8 +8,6 @@ function createDatabases($ip) {
   // photoApp database
   $mysql->query("CREATE DATABASE IF NOT EXISTS photoApp");
 
-  // userDB database
-  $mysql->query("CREATE DATABASE IF NOT EXISTS userDB");
 };
 
 
@@ -18,7 +16,6 @@ function createTables($ip) {
 
   // MYSQL connections
   $photoApp = new mysqli($ip, "root", NULL, "photoApp");
-  $userDB = new mysqli($ip, "root", NULL, "userDB");
 
   // Create photos table query
   $photoTable = "CREATE TABLE IF NOT EXISTS photos (
@@ -42,11 +39,21 @@ function createTables($ip) {
     UNIQUE KEY (email)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=42";
 
+  // Create 'likes' table query
+  $likesTable = "CREATE TABLE IF NOT EXISTS likes (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    photo_id INT NOT NULL,
+    user_id INT NOT NULL
+  )";
+
   // Run create photos table query
   $photoApp->query($photoTable);
 
   // Run create users table query
-  $userDB->query($usersTable);
+  $photoApp->query($usersTable);
+
+  // Run create users table query
+  $photoApp->query($likesTable);
 };
 
 

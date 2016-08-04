@@ -37,4 +37,11 @@ $photo = $PhotoClass->singlePhoto($id);
 
 </div>
 
+<div class="container">
+
+  <p id="test">
+    click me
+  </p>
+</div>
+
 <?php include_once('/app/includes/footer.inc'); ?>

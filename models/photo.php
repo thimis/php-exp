@@ -179,4 +179,22 @@ class Photo {
     $ret['id'] = $user_id;
     return $ret;
   }
+
+  /**
+   * Like
+   *
+   * A user can like another user's photo
+   * @param {Number} $user_id of the user liking the photo
+   * @param {Number} $photo_id of the photo being liked
+   */
+  public function like($user_id, $photo_id) {
+    $query = "INSERT INTO likes(user_id, photo_id) VALUES('$user_id', '$photo_id')";
+
+    $res = $this->db->query($query);
+
+    return array(
+      "response" => "User " . $user_id . " liked photo " . $photo_id,
+      "db_response" => $res,
+    );
+  }
 }

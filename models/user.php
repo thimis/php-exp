@@ -13,7 +13,7 @@ class User {
 
   public function __construct() {
     include_once('/app/lib/db.php');
-    $this->db = new Db("userDB");
+    $this->db = new Db("photoApp");
   }
 
   /**
@@ -166,7 +166,7 @@ class User {
     if ($res === false) {
       return 'deleteFail';
     }
-    $session->destroy();
+    $session->forget();
     return 'deleteSuccess';
   }
 

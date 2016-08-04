@@ -47,6 +47,7 @@ const filterProto = {
   },
 };
 
+
 if (document.getElementById('filters')) {
   filterProto.methods.init();
 } else {

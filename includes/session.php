@@ -13,5 +13,5 @@ session_save_path('/tmp');
 $session->start();
 
 if (!$session->isValid()) {
-  $session->destroy();
+  $session->forget();
 }
