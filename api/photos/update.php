@@ -12,6 +12,6 @@ $photoArray = array(
 );
 $PhotoClass = new Photo();
 $updateMessage = $PhotoClass->updatePhoto($photoArray);
-header("Location: http://localhost/photos?message=" . $updateMessage, true, 302);
+header("Location: /photos?message=" . $updateMessage, true, 302);
 
 ?>

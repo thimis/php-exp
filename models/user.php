@@ -147,9 +147,9 @@ class User {
        $session->put('user.email', $email);
        $session->put('user.first_name', $first_name);
        $session->put('user.last_name', $last_name);
-       header("Location: http://localhost/api/photo.php?message=editSuccess&id=" . $id, true, 302);
+       header("Location: /api/photo.php?message=editSuccess&id=" . $id, true, 302);
      } else {
-       header("Location: http://localhost/api/photo.php?message=editFail&id=" . $id, true, 302);
+       header("Location: /api/photo.php?message=editFail&id=" . $id, true, 302);
      }
    }
 
@@ -205,11 +205,11 @@ class User {
 
     // Handle empty email or password
     if (empty($form['email']) || empty($form['password']) || empty($form['confirm_password'])) {
-      header("Location: http://localhost/index.php?message=emptyfield", true, 302);
+      header("Location: /index.php?message=emptyfield", true, 302);
      } elseif (!($form['password'] == $form['confirm_password'])) {
-      header("Location: http://localhost/index.php?message=passwordMismatch", true, 302);
+      header("Location: /index.php?message=passwordMismatch", true, 302);
     } elseif ($this->db->query('SELECT * FROM users WHERE email = "' . $form["email"] . '"')->num_rows > 0) {
-      header("Location: http://localhost/index.php?message=emailTaken", true, 302);
+      header("Location: /index.php?message=emailTaken", true, 302);
     } else {
       return true;
     }

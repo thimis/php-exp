@@ -44,6 +44,9 @@ ini_set('display_errors',1);
             <a class="navigation-link" href="/user/new">Sign up</a>
           </li>
         <?php endif; ?>
+        <li class="navigation-item">
+          <a class="navigation-link" href="/user/login">Login</a>
+        </li>
 			</ul>
 		</section>
 	</nav>
