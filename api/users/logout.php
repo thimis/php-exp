@@ -1,7 +1,7 @@
 <?php
-  include_once('/app/includes/header.inc');
+  include_once('/home/ubuntu/workspace/includes/header.inc');
 
   $session->put('user', null);
   $session->forget();
-  header("Location: http://localhost/", true, 302);
+  header("Location: /index.php", true, 302);
 ?>

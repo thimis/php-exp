@@ -12,7 +12,7 @@ class User {
 
 
   public function __construct() {
-    include_once('/app/lib/db.php');
+    include_once('/home/ubuntu/workspace/lib/db.php');
     $this->db = new Db("photoApp");
   }
 
@@ -119,9 +119,9 @@ class User {
       if ($this->db->query($query)) {
         $session->put('user', $this->singleUser($this->db->currentId()));
         $session->put('user.loggedin', true);
-        header("Location: http://localhost/index.php?message=saved");
+        header("Location: /index.php?message=saved");
       } else {
-        header("Location: http://localhost/index.php?message=notsaved");
+        header("Location: /index.php?message=notsaved");
       }
     }
 

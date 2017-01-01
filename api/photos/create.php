@@ -1,8 +1,8 @@
   <?php
 
   // Includes
-  include_once('/app/lib/db.php');
-  include_once('/app/models/photo.php');
+  include_once('/home/ubuntu/workspace/lib/db.php');
+  include_once('/home/ubuntu/workspace/models/photo.php');
 
   // POST params + Image file
   $body = $_POST;

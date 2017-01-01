@@ -1,8 +1,8 @@
 <?php
 // Includes
-include_once('/app/includes/header.inc');
-include_once('/app/lib/db.php');
-include_once('/app/models/photo.php');
+include_once('/home/ubuntu/workspace/includes/header.inc');
+include_once('/home/ubuntu/workspace/lib/db.php');
+include_once('/home/ubuntu/workspace/models/photo.php');
 
 // Retrieve the entries
 $Photo = new Photo();
@@ -41,4 +41,4 @@ $photos = $Photo->allPhotos();
 </div>
 
 
-<?php include_once('/app/includes/footer.inc'); ?>
+<?php include_once('/home/ubuntu/workspace/includes/footer.inc'); ?>

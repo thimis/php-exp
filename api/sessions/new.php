@@ -1,6 +1,6 @@
 <?php
-  include_once('/app/includes/header.inc');
-  include_once('/app/models/user.php');
+  include_once('/home/ubuntu/workspace/includes/header.inc');
+  include_once('/home/ubuntu/workspace/models/user.php');
 
   $User = new User();
   $user = $_POST;

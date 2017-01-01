@@ -6,7 +6,7 @@ class Photo {
 
 
   public function __construct() {
-    include_once('/app/lib/db.php');
+    include_once('/home/ubuntu/workspace/lib/db.php');
     $this->db = new Db("photoApp");
   }
 
@@ -96,7 +96,7 @@ class Photo {
     }
 
     // Save the file to disk
-    move_uploaded_file($tmp, '/app/public/images/' . $image);
+    move_uploaded_file($tmp, '/home/ubuntu/workspace/public/images/' . $image);
 
     $query = "INSERT INTO photos(image, title, description, filter, user_id) VALUES('$image', '$title', '$description', '$filter', '$user_id')";
     // save the photo entry to the database
@@ -171,7 +171,7 @@ class Photo {
    * @return {Array} $ret return an array with user information
    */
   private function getUser($user_id) {
-    include_once('/app/models/user.php');
+    include_once('/home/ubuntu/workspace/models/user.php');
     $UserClass = new User();
     $user = $UserClass->singleUser($user_id);
     $ret['name'] = $user['first_name'] . ' ' . $user['last_name'];
