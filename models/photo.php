@@ -85,14 +85,14 @@ class Photo {
     $user_id = $data['user_id'];
 
     if (!$this->isImage($tmp)) {
-      header("Location: http://localhost/photo/new?message=notImage", true, 302);
+      header("Location: /photo/new?message=notImage", true, 302);
     }
 
     if (empty($title) ||
         empty($description) ||
         empty($image)
     ) {
-      header("Location: http://localhost/photo/new?message=emptyfield", true, 302);
+      header("Location: /photo/new?message=emptyfield", true, 302);
     }
 
     // Save the file to disk
@@ -101,9 +101,9 @@ class Photo {
     $query = "INSERT INTO photos(image, title, description, filter, user_id) VALUES('$image', '$title', '$description', '$filter', '$user_id')";
     // save the photo entry to the database
     if ($this->db->query($query)) {
-      header("Location: http://localhost/index.php?message=saved", true, 302);
+      header("Location: /index.php?message=saved", true, 302);
     } else {
-      header("Location: http://localhost/index.php?message=notsaved", true, 302);
+      header("Location: /index.php?message=notsaved", true, 302);
     }
   }
 
@@ -121,16 +121,16 @@ class Photo {
       $filter = $data['filter'];
 
       if (!$this->isImage($image)) {
-        header("Location: http://localhost/index.php?message=notImage", true, 302);
+        header("Location: /index.php?message=notImage", true, 302);
       }
 
       $query = "UPDATE photos SET title='" . $title . "', description='" . $description . "', filter='" . $filter . "' WHERE id=" . $id;
       // save the photo entry to the database
 
       if ($this->db->query($query)) {
-        header("Location: http://localhost/api/photo.php?message=editSuccess&id=" . $id, true, 302);
+        header("Location: /api/photo.php?message=editSuccess&id=" . $id, true, 302);
       } else {
-        header("Location: http://localhost/api/photo.php?message=editFail&id=" . $id, true, 302);
+        header("Location: /api/photo.php?message=editFail&id=" . $id, true, 302);
       }
     }
 
