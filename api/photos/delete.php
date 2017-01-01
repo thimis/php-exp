@@ -1,7 +1,7 @@
 <?php
 // Includes
-include_once('/app/models/photo.php');
-include_once('/app/includes/header.inc');
+include_once('/home/ubuntu/workspace/models/photo.php');
+include_once('/home/ubuntu/workspace/includes/header.inc');
 
 $id = $_GET['id'];
 $PhotoClass = new Photo();

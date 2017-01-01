@@ -3,7 +3,7 @@
 // Create the Database
 function createDatabases($ip) {
   // MYSQL connection
-  $mysql = new mysqli($ip, "root");
+  $mysql = new mysqli($ip, getenv("C9_USER"));
 
   // photoApp database
   $mysql->query("CREATE DATABASE IF NOT EXISTS photoApp");
@@ -15,7 +15,7 @@ function createDatabases($ip) {
 function createTables($ip) {
 
   // MYSQL connections
-  $photoApp = new mysqli($ip, "root", NULL, "photoApp");
+  $photoApp = new mysqli($ip, getenv("C9_USER"), NULL, "photoApp");
 
   // Create photos table query
   $photoTable = "CREATE TABLE IF NOT EXISTS photos (
@@ -57,7 +57,7 @@ function createTables($ip) {
 };
 
 
-$host= gethostname();
-$ip = gethostbyname($host);
+//$host= gethostname();
+$ip = getenv("IP");
 createDatabases($ip);
 createTables($ip);

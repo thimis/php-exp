@@ -1,6 +1,6 @@
 <?php
 // Includes
-include_once('/app/models/photo.php');
+include_once('/home/ubuntu/workspace/models/photo.php');
 
 $user = $_GET['user_id'];
 $photo = $_GET['photo_id'];

@@ -1,5 +1,5 @@
 <?php
-include_once('/app/includes/session.php');
+include_once('/home/ubuntu/workspace/includes/session.php');
 error_reporting(E_ALL);
 ini_set('display_errors',1);
 ?>

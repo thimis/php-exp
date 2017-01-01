@@ -1,7 +1,7 @@
 <?php
 // Includes
-include_once('/app/includes/header.inc');
-include_once('/app/models/user.php');
+include_once('/home/ubuntu/workspace/includes/header.inc');
+include_once('/home/ubuntu/workspace/models/user.php');
 
 $id = $_GET['id'];
 $UserClass = new User();
@@ -16,4 +16,4 @@ $user = $UserClass->singleUser($id);
    ?>
 </pre>
 
-<?php include_once('/app/includes/footer.inc'); ?>
+<?php include_once('/home/ubuntu/workspace/includes/footer.inc'); ?>

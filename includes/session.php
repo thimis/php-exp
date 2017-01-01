@@ -1,6 +1,6 @@
 <?php
 
-include_once('/app/models/session.php');
+include_once('/home/ubuntu/workspace/models/session.php');
 
 if (!isset($session)) {
   $session = new SecureSessionHandler('user');
