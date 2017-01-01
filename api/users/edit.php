@@ -5,7 +5,7 @@
   $id = $_GET['id'];
 
   if (!($session->get('user.id') == $id)) {
-    header("Location: http://localhost/photos?message=notAllowed", true, 302);
+    header("Location: /photos?message=notAllowed", true, 302);
   }
 
   $UserClass = new User();

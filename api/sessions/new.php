@@ -6,8 +6,8 @@
   $user = $_POST;
 
   if ($User->login($user, $session)) {
-    header("Location: http://localhost/?loggedIn", true, 302);
+    header("Location: /?loggedIn", true, 302);
   } else {
-    header("Location: http://localhost/?loginError", true, 302);
+    header("Location: /?loginError", true, 302);
   }
 ?>
