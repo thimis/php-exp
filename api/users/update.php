@@ -7,7 +7,7 @@ include_once('/home/ubuntu/workspace/includes/header.inc');
 $photo = $_POST;
 
 if (!($session->get('user.id') == $photo['id'])) {
-  header("Location: http://localhost/photos?message=notAllowed", true, 302);
+  header("Location: /photos?message=notAllowed", true, 302);
 }
 
 $photoArray = array(
@@ -18,6 +18,6 @@ $photoArray = array(
 );
 $PhotoClass = new Photo();
 $updateMessage = $PhotoClass->updatePhoto($photoArray);
-header("Location: http://localhost/photos?message=" . $updateMessage, true, 302);
+header("Location: /photos?message=" . $updateMessage, true, 302);
 
 ?>

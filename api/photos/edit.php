@@ -8,7 +8,7 @@
   $photo = $PhotoClass->singlePhoto($id);
 
   if (!($session->get('user.id') == $photo['user_id'])) {
-    header("Location: http://localhost/photos?message=notAllowed", true, 302);
+    header("Location: /photos?message=notAllowed", true, 302);
   }
 ?>
 

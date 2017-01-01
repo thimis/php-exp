@@ -2,7 +2,7 @@
   include_once('/home/ubuntu/workspace/includes/header.inc');
 
   if ($session->get('user.loggedin')) {
-    header("Location: http://localhost/photos/", true, 302);
+    header("Location: /photos/", true, 302);
   }
 ?>
 
